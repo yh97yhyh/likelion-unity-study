@@ -16,12 +16,4 @@ public class Launcher : MonoBehaviour
         Instantiate(bullet, transform.position, Quaternion.identity);
         SoundManager.Instance.PlayBulletSound();
     }
-
-    void Update()
-    {
-        
-    }
-
-
- 
 }
