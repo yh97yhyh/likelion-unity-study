@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SphereController : MonoBehaviour
 {
-
     public Rigidbody rb;
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
@@ -54,6 +53,5 @@ public class SphereController : MonoBehaviour
             mainCamera.position = cameraStartPosition;
         }
     }
-
 
 }
