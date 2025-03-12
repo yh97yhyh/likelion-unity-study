@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     { 
         get { return _isRunning; }
         set
-        {
+        {   
             if (_isRunning == true && value == false)
             {
                 StartCoroutine(DelayedFinishGame());
@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public int Score { get; set; }
     public Text SituationText;
-
 
     private void Awake()
     {
