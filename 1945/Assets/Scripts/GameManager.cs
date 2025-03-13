@@ -1,0 +1,53 @@
+using UnityEngine;
+
+public enum Stage
+{
+    First,
+    Second,
+    Boss
+}
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; set; }
+
+    private Stage _curStage;
+    public Stage CurStage
+    {
+        get { return _curStage; }
+        set
+        {
+            if (_curStage != value)
+            {
+                _curStage = value;
+            }
+        }
+    }
+
+    private int _gainedItemCnt;
+    public int GainedItemCnt
+    {
+        get { return _gainedItemCnt;  }
+        set
+        {
+            if (_gainedItemCnt != value)
+            {
+                _gainedItemCnt = value;
+            }
+        }
+    }
+    public int DropedItemCnt = 0;
+
+    public float AttackPower = 10;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+        GainedItemCnt = 0;
+        CurStage = Stage.First;
+    }
+}

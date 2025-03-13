@@ -10,9 +10,13 @@ public class Item : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         rig.AddForce(new Vector3(ItemVelocity, ItemVelocity, 0f));
     }
-
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            GameManager.Instance.GainedItemCnt++;
+            // 플레이어 지우기
+        }
     }
 }

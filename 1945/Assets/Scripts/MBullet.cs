@@ -19,7 +19,6 @@ public class MBullet : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-
             // 플레이어 지우기
         }
     }

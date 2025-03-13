@@ -139,6 +139,8 @@ MonoBehaviour:
   ms1: {fileID: 2676618528696119960}
   ms2: {fileID: 498827305385361277}
   MyBullet: {fileID: 6353785434148014829, guid: 53355be7282ec8341b8ed80017538085, type: 3}
+  Item: {fileID: 7252926209492861857, guid: 36b74c737c5825e45951ebfd117fc07e, type: 3}
+  ExplosionEffect: {fileID: 7401753731730704086, guid: 266ed742b4f600c409bbd19ac53bbd02, type: 3}
 --- !u!61 &8943406541878112229
 BoxCollider2D:
   m_ObjectHideFlags: 0

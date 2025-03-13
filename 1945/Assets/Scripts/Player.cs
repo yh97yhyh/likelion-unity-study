@@ -7,13 +7,14 @@ public class Player : MonoBehaviour
 
     // 총알
     public GameObject MyBullet;
+    public GameObject MyBullet2;
+    public GameObject MyBullet3;
+    public GameObject MyBullet4;
     public Transform pos = null;
 
     // 아이템
 
     // 레이저
-
-
     private Vector2 minBounds;
     private Vector2 maxBounds;
 
@@ -60,7 +61,23 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(MyBullet, pos.position, Quaternion.identity);
+            switch (GameManager.Instance.GainedItemCnt)
+            {
+                case 0:
+                    Instantiate(MyBullet, pos.position, Quaternion.identity);
+                    break;
+                case 1:
+                    Instantiate(MyBullet2, pos.position, Quaternion.identity);
+                    break;
+                case 2:
+                    Instantiate(MyBullet3, pos.position, Quaternion.identity);
+                    break;
+                case 3:
+                    Instantiate(MyBullet4, pos.position, Quaternion.identity);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

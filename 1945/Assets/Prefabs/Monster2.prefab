@@ -208,6 +208,7 @@ MonoBehaviour:
   ms1: {fileID: 4302046337522033097}
   ms2: {fileID: 7605415145302438678}
   MyBullet: {fileID: 747978422501701071, guid: c644e22c9aa3dfc4b9db678b5e619ad4, type: 3}
+  Item: {fileID: 7252926209492861857, guid: 36b74c737c5825e45951ebfd117fc07e, type: 3}
   ExplosionEffect: {fileID: 7401753731730704086, guid: 266ed742b4f600c409bbd19ac53bbd02, type: 3}
 --- !u!1 &5931687277617925125
 GameObject:
