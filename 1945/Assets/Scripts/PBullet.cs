@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PBullet : MonoBehaviour
 {
-    public float moveSpeed = 2.0f;
+    public float moveSpeed = 3.0f;
 
     void Start()
     {
@@ -11,12 +11,13 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(0, moveSpeed * Time.deltaTime, 0);
+        //transform.Translate(0, moveSpeed * Time.deltaTime, 0);
+        transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private void OnBecameInvisible()

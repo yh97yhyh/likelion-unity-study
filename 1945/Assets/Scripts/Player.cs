@@ -3,14 +3,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public Animator MyAnimator;
+
+    // 총알
+    public GameObject MyBullet;
+    public Transform pos = null;
+
+    // 아이템
+
+    // 레이저
+
+
     private Vector2 minBounds;
     private Vector2 maxBounds;
-    public Animator MyAnimator { get; set; }
+
 
     void Start()
     {
         MyAnimator = GetComponent<Animator>();
+        SetCameraBound();
+    }
 
+    private void SetCameraBound()
+    {
         // 화면 경계 설정
         Camera cam = Camera.main;
         Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0, 0));
@@ -20,20 +35,33 @@ public class Player : MonoBehaviour
         maxBounds = new Vector2(topRight.x, topRight.y);
     }
 
-    void FixedUpdate()
+    void Update()
+    {
+        MovePlayer();
+        SetAnimation();
+        FireBullet();
+    }
+
+    private void MovePlayer()
     {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         float moveY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 
-        SetAnimation();
-
         Vector3 newPosition = transform.position + new Vector3(moveX, moveY, 0);
 
         // 경계를 벗어나지 않도록 위치 제한
-        //newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
-        //newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
+        newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
 
         transform.position = newPosition;
+    }
+
+    private void FireBullet()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(MyBullet, pos.position, Quaternion.identity);
+        }
     }
 
     private void SetAnimation()

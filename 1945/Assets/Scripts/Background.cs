@@ -3,7 +3,7 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
     public float scrollSpeed = 0.02f;
-    public Material MyMaterial { get; set; }
+    public Material MyMaterial;
 
     void Start()
     {
