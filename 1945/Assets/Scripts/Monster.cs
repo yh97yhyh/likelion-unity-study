@@ -4,9 +4,12 @@ public class Monster : MonoBehaviour
 {
     public float moveSpeed = 1f;
     public float fireDelay = 1f;
+
     public Transform ms1;
     public Transform ms2;
     public GameObject MyBullet;
+
+    public GameObject ExplosionEffect;
 
     void Start()
     {
@@ -24,6 +27,12 @@ public class Monster : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 1);
     }
 
     private void OnBecameInvisible()

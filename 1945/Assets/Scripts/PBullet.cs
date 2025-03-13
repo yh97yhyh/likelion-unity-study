@@ -4,6 +4,8 @@ public class PBullet : MonoBehaviour
 {
     public float moveSpeed = 3.0f;
 
+    // °ø°Ý·Â
+
     void Start()
     {
         
@@ -17,7 +19,10 @@ public class PBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Destroy(gameObject);
+        if (collision.CompareTag("Monster"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnBecameInvisible()
