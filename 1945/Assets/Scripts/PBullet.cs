@@ -4,8 +4,6 @@ public class PBullet : MonoBehaviour
 {
     public float moveSpeed = 3.0f;
 
-    // °ø°Ý·Â
-
     void Start()
     {
         
@@ -21,7 +19,12 @@ public class PBullet : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Monster>().Damage();
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            collision.gameObject.GetComponent<Boss>().Damage();
         }
     }
 

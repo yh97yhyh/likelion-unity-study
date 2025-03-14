@@ -24,13 +24,6 @@ public class Monster : MonoBehaviour
         transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
     }
 
-    private void OnDestroy()
-    {
-        GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-        Destroy(effect, 1);
-        DropItem();
-    }
-
     private void CreateBullet()
     {
         Instantiate(MyBullet, ms1.position, Quaternion.identity);
@@ -39,10 +32,23 @@ public class Monster : MonoBehaviour
         Invoke("CreateBullet", fireDelay);
     }
 
+    public void Damage()
+    {
+        ShowEffect();
+        DropItem();
+        Destroy(gameObject);
+    }
+
+    private void ShowEffect()
+    {
+        GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 1);
+    }
+
     private void DropItem()
     {
         int randomProb = Random.Range(1, 101);
-        if (randomProb <= 30)
+        if (randomProb <= 50 && Player.Instance.Power < 3)
         {
             Instantiate(Item, transform.position, Quaternion.identity);
         }

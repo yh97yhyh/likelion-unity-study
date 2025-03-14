@@ -9,7 +9,7 @@ public enum Stage
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; set; }
+    public static GameManager Instance;
 
     private Stage _curStage;
     public Stage CurStage
@@ -24,18 +24,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private int _gainedItemCnt;
-    public int GainedItemCnt
-    {
-        get { return _gainedItemCnt;  }
-        set
-        {
-            if (_gainedItemCnt != value)
-            {
-                _gainedItemCnt = value;
-            }
-        }
-    }
+    //private int _power;
+    //public int Power
+    //{
+    //    get { return _power;  }
+    //    set
+    //    {
+    //        if (_power != value)
+    //        {
+    //            _power = value;
+    //        }
+    //    }
+    //}
     public int DropedItemCnt = 0;
 
     public float AttackPower = 10;
@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        GainedItemCnt = 0;
         CurStage = Stage.First;
     }
 }

@@ -13,7 +13,6 @@ public class SpawnManager : MonoBehaviour
     private bool isMonster1 = true;
     private bool isMonster2 = true;
 
-
     void Start()
     {
         StartCoroutine("RandomSpawn");
@@ -35,7 +34,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (isMonster2)
         {
-            yield return new WaitForSeconds(spawnStartTime + 2);
+            yield return new WaitForSeconds(spawnStartTime + 1f);
             float x = Random.Range(spawnStartX, spawnEndX);
             Vector2 pos = new Vector2(x, transform.position.y);
             Instantiate(MyMonster2, pos, Quaternion.identity);

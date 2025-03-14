@@ -2,25 +2,48 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     public float moveSpeed = 5f;
     public Animator MyAnimator;
 
     // 총알
-    public GameObject MyBullet;
-    public GameObject MyBullet2;
-    public GameObject MyBullet3;
-    public GameObject MyBullet4;
+    public GameObject[] MyBullets;
     public Transform pos = null;
 
-    // 아이템
+    //[SerializeField] // pirvat 인스펙터 사용하는 법
+    //private GameObject powerUp;
+
+    public GameObject PowerUpEffect;
+    private int _power;
+    public int Power
+    {
+        get { return _power; }
+        set
+        {
+            if (_power != value)
+            {
+                _power = value;
+            }
+        }
+    }
 
     // 레이저
     private Vector2 minBounds;
     private Vector2 maxBounds;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        Power = 0;
+    }
 
     void Start()
     {
+        Power = 0;
         MyAnimator = GetComponent<Animator>();
         SetCameraBound();
     }
@@ -61,23 +84,8 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            switch (GameManager.Instance.GainedItemCnt)
-            {
-                case 0:
-                    Instantiate(MyBullet, pos.position, Quaternion.identity);
-                    break;
-                case 1:
-                    Instantiate(MyBullet2, pos.position, Quaternion.identity);
-                    break;
-                case 2:
-                    Instantiate(MyBullet3, pos.position, Quaternion.identity);
-                    break;
-                case 3:
-                    Instantiate(MyBullet4, pos.position, Quaternion.identity);
-                    break;
-                default:
-                    break;
-            }
+            var i = Mathf.Min(Power, 3);
+            Instantiate(MyBullets[i], pos.position, Quaternion.identity);
         }
     }
 
@@ -110,4 +118,21 @@ public class Player : MonoBehaviour
             MyAnimator.SetBool("up", false);
         }
     }
+
+    public void PowerUp()
+    {
+        if (Power < 3)
+        {
+            Power++;
+        }
+        ShowPowerUpEffect();
+    }
+
+    private void ShowPowerUpEffect()
+    {
+        GameObject effect = Instantiate(PowerUpEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 1);
+    }
 }
+
+    

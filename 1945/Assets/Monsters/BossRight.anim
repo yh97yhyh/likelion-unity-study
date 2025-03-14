@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerBullet4
+  m_Name: BossRight
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 7036295500315667958, guid: f7f9ade3778e3dc4496925e642ada8c2, type: 3}
+      value: {fileID: 1986571184, guid: e83fcfe52c6204e4ab8b776ca0ce2c65, type: 3}
     - time: 0.083333336
-      value: {fileID: 4233807863627969779, guid: f7f9ade3778e3dc4496925e642ada8c2, type: 3}
+      value: {fileID: -187358612, guid: e83fcfe52c6204e4ab8b776ca0ce2c65, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 7036295500315667958, guid: f7f9ade3778e3dc4496925e642ada8c2, type: 3}
-    - {fileID: 4233807863627969779, guid: f7f9ade3778e3dc4496925e642ada8c2, type: 3}
+    - {fileID: 1986571184, guid: e83fcfe52c6204e4ab8b776ca0ce2c65, type: 3}
+    - {fileID: -187358612, guid: e83fcfe52c6204e4ab8b776ca0ce2c65, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

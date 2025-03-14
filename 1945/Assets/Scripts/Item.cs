@@ -15,8 +15,7 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            GameManager.Instance.GainedItemCnt++;
-            // 플레이어 지우기
+            collision.gameObject.GetComponent<Player>().PowerUp();
         }
     }
 }
