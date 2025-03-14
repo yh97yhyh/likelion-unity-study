@@ -4,11 +4,6 @@ public class MBullet : MonoBehaviour
 {
     public float moveSpeed = 4f;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);

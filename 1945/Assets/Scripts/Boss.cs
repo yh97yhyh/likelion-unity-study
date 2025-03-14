@@ -5,6 +5,7 @@ public class Boss : MonoBehaviour
 {
     private int directionFlag = 1;
     private int moveSpeed = 2;
+    private int hp = 20;
 
     public GameObject MyBullet;
     public GameObject CircleBullet;
@@ -43,12 +44,6 @@ public class Boss : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
         }
-    }
-
-    public void Damage()
-    {
-        ShowEffect();
-        //Destroy(gameObject);
     }
 
     IEnumerator FireCircle()
@@ -91,6 +86,25 @@ public class Boss : MonoBehaviour
         }
     }
 
+    public void Damage()
+    {
+        ReduceHp();
+        ShowEffect();
+        //Destroy(gameObject);
+    }
+
+    private void ReduceHp()
+    {
+        if (hp > 0)
+        {
+            hp--;
+
+            if (hp == 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 
     private void ShowEffect()
     {

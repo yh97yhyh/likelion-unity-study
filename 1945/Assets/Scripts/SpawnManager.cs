@@ -15,8 +15,8 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine("RandomSpawn");
-        Invoke("Stop", spawnStopTime);
+        //StartCoroutine("RandomSpawn");
+        //Invoke("Stop", spawnStopTime);
     }
 
     IEnumerator RandomSpawn()
