@@ -296,7 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbc510bbf456654b9c7e6f27549b5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyBullet: {fileID: 6353785434148014829, guid: 53355be7282ec8341b8ed80017538085, type: 3}
+  MyBullet: {fileID: 4093323614839819800, guid: 440f5ba88d67dbd41804c5fea93c5967, type: 3}
+  CircleBullet: {fileID: 8866670076214300573, guid: 8d81af2a410724e4babf5eb6e670cb9b, type: 3}
   pos1: {fileID: 428648888}
   pos2: {fileID: 584046488}
   ExplosionEffect: {fileID: 7401753731730704086, guid: 266ed742b4f600c409bbd19ac53bbd02, type: 3}
