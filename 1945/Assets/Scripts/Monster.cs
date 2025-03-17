@@ -32,7 +32,7 @@ public class Monster : MonoBehaviour
         Invoke("CreateBullet", fireDelay);
     }
 
-    public void Damage()
+    public void Damage(int attack)
     {
         ShowEffect();
         DropItem();

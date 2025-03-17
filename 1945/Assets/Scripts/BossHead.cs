@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BossHead : MonoBehaviour
 {
-
     public GameObject BossBullet;
 
     // 애니메이션에서 함수 사용

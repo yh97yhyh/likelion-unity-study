@@ -19,7 +19,7 @@ public class PBullet : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
-            collision.gameObject.GetComponent<Monster>().Damage();
+            collision.gameObject.GetComponent<Monster>().Damage(10);
         }
 
         if (collision.CompareTag("Boss"))

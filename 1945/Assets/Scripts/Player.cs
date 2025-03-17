@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class Player : MonoBehaviour
     public Animator MyAnimator;
 
     // 총알
+    public Transform LauncherPos = null;
     public GameObject[] MyBullets;
-    public Transform pos = null;
+    public GameObject MyLaser;
+    public float gValue = 0;
 
     //[SerializeField] // pirvat 인스펙터 사용하는 법
     //private GameObject powerUp;
@@ -84,8 +87,33 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            var i = Mathf.Min(Power, 3);
-            Instantiate(MyBullets[i], pos.position, Quaternion.identity);
+            ShowBullet();
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            ShowLaser();
+        }
+        else
+        {
+            gValue -= Time.deltaTime;
+            gValue = (gValue <= 0) ? 0 : gValue;
+        }
+    }
+
+    private void ShowBullet()
+    {
+        var i = Mathf.Min(Power, 3);
+        Instantiate(MyBullets[i], LauncherPos.position, Quaternion.identity);
+    }
+
+    private void ShowLaser()
+    {
+        gValue += Time.deltaTime;
+        if (gValue >= 1)
+        {
+            GameObject lazer = Instantiate(MyLaser, LauncherPos.position, Quaternion.identity);
+            Destroy(lazer, 1);
+            gValue = 0;
         }
     }
 
