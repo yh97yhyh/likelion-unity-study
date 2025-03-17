@@ -5,7 +5,7 @@ public class Boss : MonoBehaviour
 {
     private int directionFlag = 1;
     private int moveSpeed = 2;
-    private int hp = 20;
+    private int hp = 5000;
 
     public GameObject MyBullet;
     public GameObject CircleBullet;
@@ -86,23 +86,13 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public void Damage(int attack)
     {
-        ReduceHp();
+        hp -= attack;
         ShowEffect();
-        //Destroy(gameObject);
-    }
-
-    private void ReduceHp()
-    {
-        if (hp > 0)
+        if (hp <= 0)
         {
-            hp--;
-
-            if (hp == 0)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 

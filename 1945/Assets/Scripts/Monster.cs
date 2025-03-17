@@ -3,6 +3,7 @@ using static UnityEditor.PlayerSettings;
 
 public class Monster : MonoBehaviour
 {
+    public int hp = 100;
     public float moveSpeed = 1f;
     public float fireDelay = 1f;
 
@@ -34,9 +35,14 @@ public class Monster : MonoBehaviour
 
     public void Damage(int attack)
     {
+        hp -= attack;
         ShowEffect();
-        DropItem();
-        Destroy(gameObject);
+        if (hp <= 0)
+        {
+            DropItem();
+            Destroy(gameObject);
+            //MyDestroy();
+        }
     }
 
     private void ShowEffect()
@@ -57,5 +63,11 @@ public class Monster : MonoBehaviour
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+        //MyDestroy();
+    }
+
+    private void MyDestroy()
+    {
+        PoolManager.Instance.Return(gameObject);
     }
 }

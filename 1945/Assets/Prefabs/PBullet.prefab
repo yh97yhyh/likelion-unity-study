@@ -176,4 +176,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  MyEffect: {fileID: 7401753731730704086, guid: 266ed742b4f600c409bbd19ac53bbd02, type: 3}
+  attack: 20

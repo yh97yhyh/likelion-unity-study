@@ -3,6 +3,7 @@ using UnityEngine;
 public class PBullet : MonoBehaviour
 {
     public float moveSpeed = 3.0f;
+    public int attack = 10;
 
     void Start()
     {
@@ -19,17 +20,24 @@ public class PBullet : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
-            collision.gameObject.GetComponent<Monster>().Damage(10);
+            collision.gameObject.GetComponent<Monster>().Damage(attack);
+            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Boss"))
         {
-            collision.gameObject.GetComponent<Boss>().Damage();
+            collision.gameObject.GetComponent<Boss>().Damage(attack);
+            Destroy(gameObject);
         }
     }
 
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void MyDestroy()
+    {
+        PoolManager.Instance.Return(gameObject);
     }
 }

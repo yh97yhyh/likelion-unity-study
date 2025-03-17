@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
     {
         var i = Mathf.Min(Power, 3);
         Instantiate(MyBullets[i], LauncherPos.position, Quaternion.identity);
+        //MyInstantiate(MyBullets[i], LauncherPos.position);
     }
 
     private void ShowLaser()
@@ -160,6 +161,12 @@ public class Player : MonoBehaviour
     {
         GameObject effect = Instantiate(PowerUpEffect, transform.position, Quaternion.identity);
         Destroy(effect, 1);
+    }
+
+    private void MyInstantiate(GameObject go, Vector2 pos)
+    {
+        GameObject bullet = PoolManager.Instance.Get(go);
+        bullet.transform.position = pos;
     }
 }
 

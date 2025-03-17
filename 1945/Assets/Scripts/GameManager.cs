@@ -24,18 +24,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //private int _power;
-    //public int Power
-    //{
-    //    get { return _power;  }
-    //    set
-    //    {
-    //        if (_power != value)
-    //        {
-    //            _power = value;
-    //        }
-    //    }
-    //}
     public int DropedItemCnt = 0;
 
     public float AttackPower = 10;

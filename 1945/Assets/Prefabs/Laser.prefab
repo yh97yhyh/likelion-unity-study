@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExplosionEffect: {fileID: 7401753731730704086, guid: 266ed742b4f600c409bbd19ac53bbd02, type: 3}
+  attack: 15
 --- !u!1 &4231968321788368841
 GameObject:
   m_ObjectHideFlags: 0

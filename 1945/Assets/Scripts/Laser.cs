@@ -4,7 +4,7 @@ public class Laser : MonoBehaviour
 {
     public GameObject ExplosionEffect;
     Transform pos;
-    int Attack = 10;
+    public int attack = 15;
 
     void Start()
     {
@@ -30,12 +30,13 @@ public class Laser : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
-            collision.gameObject.GetComponent<Monster>().Damage(Attack++);
+            collision.gameObject.GetComponent<Monster>().Damage(attack);
             ShowEffect(collision.transform.position);
         }
 
         if (collision.CompareTag("Boss"))
         {
+            collision.gameObject.GetComponent<Boss>().Damage(attack);
             ShowEffect(collision.transform.position);
         }
     }
