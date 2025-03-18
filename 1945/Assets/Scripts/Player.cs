@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     // ∑π¿Ã¿˙
     private Vector2 minBounds;
     private Vector2 maxBounds;
+
+    public Image Gage;
 
     private void Awake()
     {
@@ -92,11 +94,13 @@ public class Player : MonoBehaviour
         else if (Input.GetKey(KeyCode.Space))
         {
             ShowLaser();
+            Gage.fillAmount = gValue;
         }
         else
         {
             gValue -= Time.deltaTime;
             gValue = (gValue <= 0) ? 0 : gValue;
+            Gage.fillAmount = gValue;
         }
     }
 

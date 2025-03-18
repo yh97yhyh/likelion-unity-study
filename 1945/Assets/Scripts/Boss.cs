@@ -5,7 +5,7 @@ public class Boss : MonoBehaviour
 {
     private int directionFlag = 1;
     private int moveSpeed = 2;
-    private int hp = 5000;
+    private int hp = 3000;
 
     public GameObject MyBullet;
     public GameObject CircleBullet;
@@ -14,6 +14,8 @@ public class Boss : MonoBehaviour
 
     public GameObject ExplosionEffect;
 
+    [SerializeField]
+    GameObject BossClearText;
 
     void Start()
     {
@@ -100,6 +102,11 @@ public class Boss : MonoBehaviour
     {
         GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
         Destroy(effect, 1);
+    }
+
+    private void HandleBossClearText()
+    {
+        BossClearText.SetActive(true);
     }
 
     private void OnBecameInvisible()
