@@ -30,12 +30,14 @@ public class Laser : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
+            CameraShake.Instance.ShakeCamera();
             collision.gameObject.GetComponent<Monster>().Damage(attack);
             ShowEffect(collision.transform.position);
         }
 
         if (collision.CompareTag("Boss"))
         {
+            CameraShake.Instance.ShakeCamera();
             collision.gameObject.GetComponent<Boss>().Damage(attack);
             ShowEffect(collision.transform.position);
         }

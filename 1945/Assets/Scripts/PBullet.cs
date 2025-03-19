@@ -20,12 +20,14 @@ public class PBullet : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
+            CameraShake.Instance.ShakeCamera();
             collision.gameObject.GetComponent<Monster>().Damage(attack);
             Destroy(gameObject);
         }
 
         if (collision.CompareTag("Boss"))
         {
+            CameraShake.Instance.ShakeCamera();
             collision.gameObject.GetComponent<Boss>().Damage(attack);
             Destroy(gameObject);
         }
