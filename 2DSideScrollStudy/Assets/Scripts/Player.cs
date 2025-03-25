@@ -1,15 +1,24 @@
+using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Attriutes")]
     public float speed = 5;
     public float jumpUp = 1;
+    public float power = 2;
     public Vector3 direction;
+    public GameObject slash;
+
+    public GameObject shadow;
+    List<GameObject> shadows = new List<GameObject>();
+
+    public GameObject hitLazer;
 
     Animator animator;
     Rigidbody2D rigid2D;
     SpriteRenderer sp;
-    public GameObject slash;
 
     public bool isJump = false;
 
@@ -42,15 +51,31 @@ public class Player : MonoBehaviour
         {
             sp.flipX = true;
             animator.SetBool("isRun", true);
+
+            for(int i=0; i<shadows.Count; i++)
+            {
+                shadows[i].GetComponent<SpriteRenderer>().flipX = sp.flipX;
+            }
         }
         else if (direction.x > 0)
         {
             sp.flipX = false;
             animator.SetBool("isRun", true);
+
+            for (int i = 0; i < shadows.Count; i++)
+            {
+                shadows[i].GetComponent<SpriteRenderer>().flipX = sp.flipX;
+            }
         }
         else
         {
             animator.SetBool("isRun", false);
+
+            for (int i = 0; i < shadows.Count; i++)
+            {
+                Destroy(shadows[i]);
+                shadows.RemoveAt(i);
+            }
         }
     }
 
@@ -85,16 +110,36 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("Attack");
-            //ShowSlash();
+            Instantiate(hitLazer, transform.position, Quaternion.identity);
         }
     }
 
-    private void AttackSlash()
+    public void AttackSlash()
     {
-        Instantiate(slash, transform.position, Quaternion.identity);
+        if (sp.flipX == false)
+        {
+            rigid2D.AddForce(Vector2.right * power, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rigid2D.AddForce(Vector2.left * power, ForceMode2D.Impulse);
+        }
+
+        GameObject go = Instantiate(slash, transform.position, Quaternion.identity);
+        //go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
+    }
+
+    public void RunShadow()
+    {
+        if (shadows.Count < 6)
+        {
+            GameObject go = Instantiate(shadow, transform.position, Quaternion.identity);
+            go.GetComponent<Shadow>().speed = 10 - shadows.Count;
+            shadows.Add(go);
+        }
     }
 
 }
