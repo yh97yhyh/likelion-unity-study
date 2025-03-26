@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     public bool isJump = false;
 
+    //public GameObject dust;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -140,6 +142,11 @@ public class Player : MonoBehaviour
             go.GetComponent<Shadow>().speed = 10 - shadows.Count;
             shadows.Add(go);
         }
+    }
+
+    public void ShowDust(GameObject dust)
+    {
+        Instantiate(dust, transform.position + new Vector3(-0.073f, -0.358f, 0), Quaternion.identity);
     }
 
 }

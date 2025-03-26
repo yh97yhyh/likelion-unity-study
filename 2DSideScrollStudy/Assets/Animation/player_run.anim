@@ -98,6 +98,13 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
+    functionName: ShowDust
+    data: 
+    objectReferenceParameter: {fileID: 7433114619821513952, guid: 972595a066d29644b95bde8a018c5e98, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: RunShadow
     data: 
     objectReferenceParameter: {fileID: 0}
