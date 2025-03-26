@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_jump
+  m_Name: player_grab
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1107961549811648008, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
+      value: {fileID: -5922662330266245326, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
     - time: 0.083333336
-      value: {fileID: -7248497713622063056, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
+      value: {fileID: 1639293380594677052, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
     - time: 0.16666667
-      value: {fileID: -9117590582219111162, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
+      value: {fileID: 8452886990920758573, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
     - time: 0.25
-      value: {fileID: 659170579657462323, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
+      value: {fileID: -592166621172131843, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1107961549811648008, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
-    - {fileID: -7248497713622063056, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
-    - {fileID: -9117590582219111162, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
-    - {fileID: 659170579657462323, guid: d9b72282978a5ff478cf3f0889509895, type: 3}
+    - {fileID: -5922662330266245326, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
+    - {fileID: 1639293380594677052, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
+    - {fileID: 8452886990920758573, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
+    - {fileID: -592166621172131843, guid: 7353e634f777f1a4f9046fc1f7507f2f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -78,11 +78,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0
-    functionName: ShowJumpDust
-    data: 
-    objectReferenceParameter: {fileID: 8180457561494885426, guid: 1741639b533ba23448bc5181e5f8be98, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

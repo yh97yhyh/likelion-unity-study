@@ -22,7 +22,14 @@ public class Player : MonoBehaviour
 
     public bool isJump = false;
 
-    //public GameObject dust;
+    public Transform wallCheck;
+    public float wallCheckDistance;
+    public LayerMask wallLayer;
+    public bool isWall;
+    public float slidingSpeed;
+    public float wallJumpPower;
+    public bool isWallJump;
+    public float isRight = 1;
 
     void Start()
     {
@@ -34,10 +41,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        FlipPlayer();
-        Move();
-        Jump();
-        Attack();
+        if (!isWallJump)
+        {
+            KeyInput();
+            Move();
+            Jump();
+            Attack();
+        }
+
+        CheckWall();
     }
 
     private void FixedUpdate()
@@ -45,7 +57,7 @@ public class Player : MonoBehaviour
         CheckGround();
     }
 
-    private void FlipPlayer()
+    private void KeyInput()
     {
         direction.x = Input.GetAxisRaw("Horizontal");
 
@@ -58,6 +70,8 @@ public class Player : MonoBehaviour
             {
                 shadows[i].GetComponent<SpriteRenderer>().flipX = sp.flipX;
             }
+
+            isRight = -1;
         }
         else if (direction.x > 0)
         {
@@ -68,6 +82,8 @@ public class Player : MonoBehaviour
             {
                 shadows[i].GetComponent<SpriteRenderer>().flipX = sp.flipX;
             }
+
+            isRight = 1;
         }
         else
         {
@@ -95,6 +111,36 @@ public class Player : MonoBehaviour
             animator.SetBool("isJump", true);
             //isJump = true;
         }
+
+        if (isWall)
+        {
+            isWallJump = false;
+            rigid2D.linearVelocity = new Vector2(rigid2D.linearVelocityX, rigid2D.linearVelocityY * slidingSpeed);
+
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                isWallJump = true;
+
+                Invoke("FreezeX", 0.3f);
+
+                rigid2D.linearVelocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
+
+                sp.flipX = !sp.flipX;
+                isRight = -isRight;
+            }
+        }
+    }
+
+    private void FreezeX()
+    {
+        isWallJump = false;
+        
+    }
+
+    private void CheckWall()
+    {
+        isWall = Physics2D.Raycast(wallCheck.position, Vector2.right * isRight, wallCheckDistance, wallLayer);
+        animator.SetBool("isGrab", isWall);
     }
 
     private void CheckGround()
@@ -149,4 +195,14 @@ public class Player : MonoBehaviour
         Instantiate(dust, transform.position + new Vector3(-0.073f, -0.358f, 0), Quaternion.identity);
     }
 
+    public void ShowJumpDust(GameObject dust)
+    {
+        Instantiate(dust, transform.position + new Vector3(0f, 0.07f, 0), Quaternion.identity);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(wallCheck.position, Vector2.right * isRight * wallCheckDistance);
+    }
 }

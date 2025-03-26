@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerLandDust : MonoBehaviour
+public class PlayerDust : MonoBehaviour
 {
     public float lifetime = 0.5f;
 
