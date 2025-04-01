@@ -15,7 +15,7 @@ public class EventManager : MonoBehaviour
 
                 if (_instance == null)
                 {
-                    GameObject gameObject = new GameObject("GameManager");
+                    GameObject gameObject = new GameObject("EventManager");
                     _instance = gameObject.AddComponent<EventManager>();
                 }
             }
@@ -25,6 +25,17 @@ public class EventManager : MonoBehaviour
     }
 
     private Dictionary<string, Action<object>> _eventDictionary = new Dictionary<string, Action<object>>();
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void AddListsner(string eventName, Action<object> listener)
     {
