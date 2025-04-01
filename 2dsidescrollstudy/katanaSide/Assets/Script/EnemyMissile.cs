@@ -13,6 +13,12 @@ public class EnemyMissile : MonoBehaviour
         Destroy(gameObject, lifeTime);  //일정 시간 후 미사일 제거     
     }
 
+    void Update()
+    {
+        float timeScale = TimeController.Instance.GetTimeScale();
+        transform.Translate(direction * speed * Time.deltaTime * timeScale);
+    }
+
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
@@ -23,23 +29,22 @@ public class EnemyMissile : MonoBehaviour
         return direction;
     }
 
-
-
-    void Update()
-    {
-        transform.Translate(direction * speed * Time.deltaTime);
-    }
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-         if(other.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
             //여기에 플레이어 데미지 로직 추가
             Destroy(gameObject);
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            ShootingEnemy enemy = other.GetComponent<ShootingEnemy>();
+            if (enemy != null)
+            {
+                enemy.PlayDeathAnimation();
+            }
+            Destroy(gameObject);
+        }
     }
-
-
 
 }

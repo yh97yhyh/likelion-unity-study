@@ -12,8 +12,7 @@ public class ShootingEnemy : MonoBehaviour
     private Transform player;            //플레이어의 위치 정보
     private float shootTimer;           //발사 타이머
     private SpriteRenderer spriteRenderer; //스프라이트 방향 전환용
-
-
+    private Animator animator;          // 애니메이션 컨트롤러
 
     void Start()
     {
@@ -21,23 +20,24 @@ public class ShootingEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         shootTimer = shootingInterval; //타이머 초기화
-
-
+        animator = GetComponent<Animator>(); // 애니메이터 초기화
     }
 
     
     void Update()
     {
-        if (player == null) return;     //플레이어가 없으면 실행하지 않음
+        if (player == null) //플레이어가 없으면 실행하지 않음
+        {
+            return;
+        }
 
         //플레이어와의 거리 계산
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if(distanceToPlayer <= detectionRange)
+        if (distanceToPlayer <= detectionRange)
         {
             //플레이어 방향으로 스프라이트 회전
             spriteRenderer.flipX = (player.position.x < transform.position.x);
-
 
             //미사일 발사 로직
             shootTimer -= Time.deltaTime;   //타이머 감소
@@ -63,17 +63,18 @@ public class ShootingEnemy : MonoBehaviour
         missile.GetComponent<SpriteRenderer>().flipX = (player.position.x < transform.position.x);
     }
 
+    // 사망 애니메이션
+    public void PlayDeathAnimation()
+    {
+        animator.SetBool("Death", true);
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length * 2); // 애니메이션 종료 후 오브젝트 제거
+    }
+
     //디버깅용 기즈모
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
-
-
-
-
-
-
 
 }
