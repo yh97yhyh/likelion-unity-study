@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    private Rigidbody2D rb;
-    private Animator animator;
-
+    [Header("Move Info")]
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -33,25 +31,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool isMoving = false;
 
-    private int facingDir = 1;
-    private bool isFacingRight = true;
+    //private int facingDir = 1;
+    //private bool isFacingRight = true;
 
-    [Header("Collision Info")]
-    [SerializeField]
-    private float grouncCheckDistance;
-    [SerializeField]
-    private LayerMask whatIsGround;
-    private bool isGround;
 
-    void Start()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();
+        base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
-        CheckGround();
+        base.Update();
+
         MovePlayer();
         Attack();
         HanldeAnimator();
@@ -76,7 +68,7 @@ public class Player : MonoBehaviour
             rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocityY);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
         }
@@ -95,7 +87,7 @@ public class Player : MonoBehaviour
     {
         comboTimeCounter -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isGround)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isGrounded)
         {
             isAttacking = true;
             comboTimeCounter = comboTime;
@@ -131,33 +123,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    protected override void CheckCollision()
+    {
+        base.CheckCollision();
+    }
+
     private void HanldeAnimator()
     {
         isMoving = (rb.linearVelocityX != 0) ? true : false;
 
         animator.SetFloat("yVelocity", rb.linearVelocityY);
         animator.SetBool("isMoving", isMoving);
-        animator.SetBool("isGrounded", isGround);
+        animator.SetBool("isGrounded", isGrounded);
         animator.SetBool("isDashing", dashTime > 0);
         animator.SetBool("isAttacking", isAttacking);
         animator.SetInteger("comboCounter", comboCounter);
     }
 
-    private void Flip()
-    {
-        facingDir = facingDir * -1;
-        isFacingRight = !isFacingRight;
-        transform.Rotate(0, 180, 0);
-    }
-
-    private void CheckGround()
-    {
-        isGround = Physics2D.Raycast(transform.position, Vector2.down, grouncCheckDistance, whatIsGround);
-        Debug.Log(isGround);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - grouncCheckDistance));
-    }
 }
