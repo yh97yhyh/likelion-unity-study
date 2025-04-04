@@ -143,7 +143,6 @@ public class Player : MonoBehaviour
         animator.SetBool("isDashing", dashTime > 0);
         animator.SetBool("isAttacking", isAttacking);
         animator.SetInteger("comboCounter", comboCounter);
-        //animator.SetFloat("comboCounterF", comboCounter);
     }
 
     private void Flip()
