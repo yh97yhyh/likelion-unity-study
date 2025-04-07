@@ -13,11 +13,6 @@ public class PlayerAirState : PlayerState
         base.Enter();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void Update()
     {
         base.Update();
@@ -26,5 +21,15 @@ public class PlayerAirState : PlayerState
         {
             stateMachine.ChangeState(player.idleState);
         }
+
+        if (player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.hangingState);
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
     }
 }
