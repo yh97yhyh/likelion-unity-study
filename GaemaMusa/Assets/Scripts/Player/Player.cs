@@ -1,7 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Attack Detail")]
+    public Vector2[] attackMovement;
+
+    public bool isBusy { get; private set; }
+
     [Header("Move Info")]
     public float moveSpeed = 12f;
     public float jumpForce;
@@ -26,11 +32,14 @@ public class Player : MonoBehaviour
     private bool isFacingRight = true;
 
     #region Components
+
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+
     #endregion
 
     #region States
+
     public PlayerStateMachine stateMachine { get; private set; } // 플레이어의 상태를 관리하는 상태 머신
 
     // 플레이어의 상태 (대기 상태, 이동 상태)
@@ -41,8 +50,9 @@ public class Player : MonoBehaviour
     public PlayerDashState dashState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
-    public PlayerPrimaryAttack playerPrimaryAttack { get; private set; }
+    public PlayerPrimaryAttackState playerPrimaryAttack { get; private set; }
     //public PlayerHangingState hangingState { get; private set; }
+
     #endregion
 
 
@@ -59,7 +69,7 @@ public class Player : MonoBehaviour
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
-        playerPrimaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
+        playerPrimaryAttack = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
         //hangingState = new PlayerHangingState(this, stateMachine, "Hanging");
     }
 
@@ -88,6 +98,11 @@ public class Player : MonoBehaviour
             dashDir = dashDir == 0 ? facingDir : dashDir;
             stateMachine.ChangeState(dashState);
         }
+    }
+
+    public void SetZeroVelocity()
+    {
+        rb.linearVelocity = new Vector2(0, 0);
     }
 
     public void SetVelocity(float _xVelocity, float _yVelocity)
@@ -130,5 +145,18 @@ public class Player : MonoBehaviour
         facingDir = facingDir * -1;
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+    }
+
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true;
+        yield return new WaitForSeconds(_seconds);
+
+        isBusy = false;
+    }
+
+    public void AnimationFinishTrigger()
+    {
+        stateMachine.currentState.AnimationFinishTrigger();
     }
 }
