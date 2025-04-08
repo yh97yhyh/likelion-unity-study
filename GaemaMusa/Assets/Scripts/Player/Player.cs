@@ -5,9 +5,15 @@ public class Player : MonoBehaviour
     [Header("Move Info")]
     public float moveSpeed = 12f;
     public float jumpForce;
+
+    [Header("Dash Info")]
+    [SerializeField] private float dashCooldown;
+    private float dashUsageTimer;
     public float dashSpeed;
     public float dashDuration;
-    public float slideSpeed;
+    public float dashDir { get; private set; }
+
+    //public float slideSpeed;
 
     [Header("Collision Info")]
     [SerializeField] private Transform groundCheck;
@@ -33,9 +39,12 @@ public class Player : MonoBehaviour
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
     public PlayerDashState dashState { get; private set; }
-    public PlayerHangingState hangingState { get; private set; }
+    public PlayerWallSlideState wallSlideState { get; private set; }
+    public PlayerWallJumpState wallJumpState { get; private set; }
+    public PlayerPrimaryAttack playerPrimaryAttack { get; private set; }
+    //public PlayerHangingState hangingState { get; private set; }
     #endregion
-    
+
 
     private void Awake()
     {
@@ -48,7 +57,10 @@ public class Player : MonoBehaviour
         jumpState = new PlayerJumpState(this, stateMachine, "Jump");
         airState = new PlayerAirState(this, stateMachine, "Jump");
         dashState = new PlayerDashState(this, stateMachine, "Dash");
-        hangingState = new PlayerHangingState(this, stateMachine, "Hanging");
+        wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
+        playerPrimaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
+        //hangingState = new PlayerHangingState(this, stateMachine, "Hanging");
     }
 
     private void Start()
@@ -62,6 +74,20 @@ public class Player : MonoBehaviour
     private void Update()
     {
         stateMachine.currentState.Update();
+        CheckForDashInput();
+    }
+
+    private void CheckForDashInput()
+    {
+        dashUsageTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
+        {
+            dashUsageTimer = dashCooldown;
+            dashDir = Input.GetAxisRaw("Horizontal");
+            dashDir = dashDir == 0 ? facingDir : dashDir;
+            stateMachine.ChangeState(dashState);
+        }
     }
 
     public void SetVelocity(float _xVelocity, float _yVelocity)
@@ -77,7 +103,8 @@ public class Player : MonoBehaviour
 
     public bool IsWallDetected()
     {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance * facingDir, whatIsGround);
+        //return Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance * facingDir, whatIsGround);
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
     }
 
     private void OnDrawGizmos()

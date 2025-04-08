@@ -17,9 +17,14 @@ public class PlayerDashState : PlayerState
     {
         base.Update();
 
-        player.SetVelocity(player.dashSpeed * player.facingDir, rb.linearVelocityY);
+        if (!player.IsGroundDetected() && player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.wallSlideState);
+        }
 
-        if (stateTimer < 0)
+        player.SetVelocity(player.dashSpeed * player.dashDir, 0); // 중력 안 받게
+
+        if (stateTimer < 0 || player.IsWallDetected())
         {
             stateMachine.ChangeState(player.idleState);
         }

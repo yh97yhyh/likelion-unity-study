@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerHangingState : PlayerState
+public class PlayerHangingState : PlayerState // Assignment
 {
     public PlayerHangingState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) 
         : base(_player, _stateMachine, _animBoolName)
@@ -17,13 +17,12 @@ public class PlayerHangingState : PlayerState
     {
         base.Update();
 
-        player.SetVelocity(rb.linearVelocityX, Mathf.Max(rb.linearVelocityY, -player.slideSpeed));
+        player.SetVelocity(rb.linearVelocityX, Mathf.Max(rb.linearVelocityY, -0.2f));
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             float jumpDirection = player.facingDir * -1;
-            rb.linearVelocity = new Vector2(jumpDirection * player.moveSpeed, player.jumpForce);
-            player.Flip();
+            player.SetVelocity(jumpDirection * player.moveSpeed, player.jumpForce);
             stateMachine.ChangeState(player.jumpState);
         }
 
