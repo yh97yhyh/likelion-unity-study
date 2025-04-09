@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     [Header("Attack Detail")]
     public Vector2[] attackMovement;
@@ -18,25 +18,6 @@ public class Player : MonoBehaviour
     public float dashSpeed;
     public float dashDuration;
     public float dashDir { get; private set; }
-
-    //public float slideSpeed;
-
-    [Header("Collision Info")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private float wallCheckDistance;
-    [SerializeField] private LayerMask whatIsGround;
-
-    public int facingDir { get; private set; } = 1;
-    private bool isFacingRight = true;
-
-    #region Components
-
-    public Animator anim { get; private set; }
-    public Rigidbody2D rb { get; private set; }
-
-    #endregion
 
     #region States
 
@@ -56,8 +37,10 @@ public class Player : MonoBehaviour
     #endregion
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // 상태 머신 인스턴스 생성
         stateMachine = new PlayerStateMachine();
 
@@ -73,16 +56,17 @@ public class Player : MonoBehaviour
         //hangingState = new PlayerHangingState(this, stateMachine, "Hanging");
     }
 
-    private void Start()
+    protected override void Start()
     {
-        anim = GetComponentInChildren<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        base.Start();
 
         stateMachine.Initialize(idleState); // 게임 시작 시 초기 상태를 대기 상태(idleState)로 설정
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         stateMachine.currentState.Update();
         CheckForDashInput();
     }
@@ -98,53 +82,6 @@ public class Player : MonoBehaviour
             dashDir = dashDir == 0 ? facingDir : dashDir;
             stateMachine.ChangeState(dashState);
         }
-    }
-
-    public void SetZeroVelocity()
-    {
-        rb.linearVelocity = new Vector2(0, 0);
-    }
-
-    public void SetVelocity(float _xVelocity, float _yVelocity)
-    {
-        rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
-        HandleFlip(_xVelocity);
-    }
-
-    public bool IsGroundDetected()
-    {
-        return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
-    }
-
-    public bool IsWallDetected()
-    {
-        //return Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance * facingDir, whatIsGround);
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
-    }
-
-    public void HandleFlip(float _x)
-    {
-        if (_x > 0 && !isFacingRight)
-        {
-            Flip();
-        }
-        else if (_x < 0 && isFacingRight)
-        {
-            Flip();
-        }
-    }
-
-    public void Flip()
-    {
-        facingDir = facingDir * -1;
-        isFacingRight = !isFacingRight;
-        transform.Rotate(0, 180, 0);
     }
 
     public IEnumerator BusyFor(float _seconds)
