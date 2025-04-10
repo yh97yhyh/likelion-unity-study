@@ -34,6 +34,7 @@ public class SkeletonBattleState : EnemyState
                 {
                     stateMachine.ChangeState(enemy.attackState);
                 }
+                return;
             }
         }
         else
