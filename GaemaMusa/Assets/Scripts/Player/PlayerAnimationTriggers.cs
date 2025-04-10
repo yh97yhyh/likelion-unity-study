@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimationTrigger : MonoBehaviour
+public class PlayerAnimationTriggers : MonoBehaviour
 {
     private Player player;
 

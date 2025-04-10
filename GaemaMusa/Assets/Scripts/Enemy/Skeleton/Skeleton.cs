@@ -5,6 +5,8 @@ public class Skeleton : Enemy
 
     public SkeletonIdleState idleState { get; private set; }
     public SkeletonMoveState moveState { get; private set; }
+    public SkeletonBattleState battleState { get; private set; }
+    public SkeletonAttackState attackState { get; private set; }
 
     protected override void Awake()
     {
@@ -12,6 +14,8 @@ public class Skeleton : Enemy
 
         idleState = new SkeletonIdleState(this, stateMachine, "Idle", this);
         moveState = new SkeletonMoveState(this, stateMachine, "Move", this);
+        battleState = new SkeletonBattleState(this, stateMachine, "Move", this);
+        attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
     }
 
     protected override void Start()
