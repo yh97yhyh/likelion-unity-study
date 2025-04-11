@@ -13,7 +13,7 @@ public class SkeletonIdleState : SkeletonGroundedState
         base.Eneter();
 
         stateTimer = enemy.idleTime;
-        enemy.SetZeroVelocity();
+        //enemy.SetZeroVelocity();
     }
 
     public override void Update()

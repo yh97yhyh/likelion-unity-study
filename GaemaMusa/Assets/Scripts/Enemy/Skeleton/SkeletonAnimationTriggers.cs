@@ -14,4 +14,27 @@ public class SkeletonAnimationTriggers : MonoBehaviour
     {
         skeleton.AnimationFinishTrigger();
     }
+
+    private void AttackTrigger()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(skeleton.attackCheck.position, skeleton.attackCheckRadius); // 범위 안에 있는 모든 Collider를 가져옴
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Player>() != null)
+            {
+                hit.GetComponent<Player>().TakeDamage();
+            }
+        }
+    }
+
+    protected void OpenCounterWindow()
+    {
+        skeleton.OpenCounterAttackWindow();
+    }
+
+    protected void CloseCounterWindow()
+    {
+        skeleton.CloseCounterAttackWindow();
+    }
 }

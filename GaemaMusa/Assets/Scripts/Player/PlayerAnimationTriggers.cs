@@ -13,4 +13,17 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         player.AnimationFinishTrigger();
     }
+
+    private void AttackTrigger()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadius); // 범위 안에 있는 모든 Collider를 가져옴
+
+        foreach(var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                hit.GetComponent<Enemy>().TakeDamage();
+            }
+        }
+    }
 }

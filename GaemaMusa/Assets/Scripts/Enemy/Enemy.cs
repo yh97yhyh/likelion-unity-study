@@ -4,6 +4,12 @@ public class Enemy : Entity
 {
     [SerializeField] protected LayerMask whatIsPlayer;
 
+    [Header("Stun Info")]
+    public float stunDuration;
+    public Vector2 stunDirection;
+    [SerializeField] protected GameObject counterImage;
+    protected bool canBeStunned;
+
     [Header("Move Info")]
     public float moveSpeed;
     public float idleTime;
@@ -33,6 +39,29 @@ public class Enemy : Entity
         base.Update();
         stateMachine.currentState.Update();
     }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+     public virtual bool CanBeStunned()
+     {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+
+        return false;
+     }
 
     public virtual RaycastHit2D IsPlayerDetected()
     {
