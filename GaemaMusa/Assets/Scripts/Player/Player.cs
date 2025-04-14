@@ -14,11 +14,11 @@ public class Player : Entity
     public float jumpForce;
 
     [Header("Dash Info")]
-    [SerializeField] private float dashCooldown;
-    private float dashUsageTimer;
     public float dashSpeed;
     public float dashDuration;
     public float dashDir { get; private set; }
+
+    public SkillManager skillManager { get; private set; }
 
     #region States
 
@@ -63,6 +63,7 @@ public class Player : Entity
     {
         base.Start();
 
+        skillManager = SkillManager.Instance;
         stateMachine.Initialize(idleState); // 게임 시작 시 초기 상태를 대기 상태(idleState)로 설정
     }
 
@@ -76,16 +77,26 @@ public class Player : Entity
 
     private void CheckForDashInput()
     {
-        dashUsageTimer -= Time.deltaTime;
+        //dashUsageTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
+        //if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
+        //{
+        //    dashUsageTimer = dashCooldown;
+        //    dashDir = Input.GetAxisRaw("Horizontal");
+        //    dashDir = dashDir == 0 ? facingDir : dashDir;
+        //    stateMachine.ChangeState(dashState);
+        //}
+
+        //dashUsageTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.dash.CanUseSkill())
         {
-            dashUsageTimer = dashCooldown;
             dashDir = Input.GetAxisRaw("Horizontal");
             dashDir = dashDir == 0 ? facingDir : dashDir;
             stateMachine.ChangeState(dashState);
         }
     }
+
 
     public IEnumerator BusyFor(float _seconds)
     {

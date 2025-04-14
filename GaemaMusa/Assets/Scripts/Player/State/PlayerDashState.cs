@@ -9,7 +9,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
+        SkillManager.Instance.clone.CreateClone(player.transform);
         stateTimer = player.dashDuration;
     }
 
