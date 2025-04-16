@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2816602909396712148}
   - component: {fileID: 6261195439565894378}
   - component: {fileID: 3436455287629023320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,12 +92,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.79290247
+  m_Offset: {x: 0.050198317, y: 0}
+  m_Radius: 0.49171376
 --- !u!114 &3436455287629023320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfca682fbb69cff46b96e7249284b27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  returnSpeed: 12
 --- !u!1 &8527426139370890598
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ SpriteRenderer:
   m_SortingLayerID: -1260248075
   m_SortingLayer: 2
   m_SortingOrder: -1
-  m_Sprite: {fileID: 1633007794, guid: f6b296ee51c42564abe9c05f1c502ecd, type: 3}
+  m_Sprite: {fileID: -2004053239, guid: f6b296ee51c42564abe9c05f1c502ecd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
