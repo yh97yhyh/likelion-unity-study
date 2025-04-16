@@ -101,7 +101,6 @@ public class Player : Entity
         }
     }
 
-
     public IEnumerator BusyFor(float _seconds)
     {
         isBusy = true;
