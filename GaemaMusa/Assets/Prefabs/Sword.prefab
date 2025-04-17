@@ -96,8 +96,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.050198317, y: 0}
-  m_Radius: 0.49171376
+  m_Offset: {x: 0.031388998, y: 0}
+  m_Radius: 0.33496976
 --- !u!114 &3436455287629023320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnSpeed: 12
+  bounceSpeed: 20
+  enemyTarget: []
+  pierceAmount: 0
 --- !u!1 &8527426139370890598
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,13 +140,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8527426139370890598}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.86602545, w: 0.49999994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4441823169031140454}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120}
 --- !u!212 &8952340727998164609
 SpriteRenderer:
   m_ObjectHideFlags: 0

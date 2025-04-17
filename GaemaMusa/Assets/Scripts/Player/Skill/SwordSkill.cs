@@ -1,8 +1,26 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum SwordType
+{
+    Regular,
+    Bounce,
+    Pierce,
+    Spin
+}
+
 public class SwordSkill : Skill
 {
+    public SwordType swordType = SwordType.Regular;
+
+    [Header("Bounce Info")]
+    [SerializeField] private float bounceAmount;
+    [SerializeField] private float bounceGravity;
+
+    [Header("Pierce Info")]
+    [SerializeField] private int pierceAmount;
+    [SerializeField] private float pierceGravity;
+
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
@@ -23,6 +41,20 @@ public class SwordSkill : Skill
         base.Start();
 
         GenerateDots();
+
+        SetupGravity();
+    }
+
+    private void SetupGravity()
+    {
+        if (swordType == SwordType.Bounce)
+        {
+            swordGravity = bounceGravity;
+        }
+        else if (swordType == SwordType.Pierce )
+        {
+            swordGravity = pierceGravity;
+        }
     }
 
 
@@ -47,7 +79,17 @@ public class SwordSkill : Skill
     {
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController swordSkillController = newSword.GetComponent<SwordSkillController>();
+
         swordSkillController.SetupSword(finalDir, swordGravity, player);
+
+        if (swordType == SwordType.Bounce)
+        {
+            swordSkillController.SetupBounce(true, bounceAmount);
+        }
+        else if (swordType == SwordType.Pierce)
+        {
+            swordSkillController.SetupPierce(pierceAmount);
+        }
 
         player.AssignNewSword(newSword);
 

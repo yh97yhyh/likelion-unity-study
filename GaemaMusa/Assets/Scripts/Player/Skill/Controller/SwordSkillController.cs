@@ -1,16 +1,27 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordSkillController : MonoBehaviour
 {
+    [SerializeField] private float returnSpeed = 12;
     private Animator anim;
     private Rigidbody2D rb;
     private CircleCollider2D cd;
     private Player player;
 
-    private bool canRotate;
+    private bool canRotate = true;
     private bool isReturning;
 
-    [SerializeField] private float returnSpeed = 12;
+    [Header("Bounce Info")]
+    [SerializeField] private float bounceSpeed = 20;
+    private bool isBouncing;
+    private float bounceAmount;
+    public List<Transform> enemyTarget;
+    private int targetIndex;
+
+    [Header("Pierce Info")]
+    [SerializeField] private float pierceAmount;
 
     private void Awake()
     {
@@ -21,11 +32,36 @@ public class SwordSkillController : MonoBehaviour
 
     public void SetupSword(Vector2 _dir, float _gravityScale, Player _player)
     {
-        rb.linearVelocity = _dir;
-        rb.gravityScale = _gravityScale;
         player = _player;
 
-        anim.SetBool("Rotation", true);
+        rb.linearVelocity = _dir;
+        rb.gravityScale = _gravityScale;
+
+        if (pierceAmount <= 0)
+        {
+            anim.SetBool("Rotation", true);
+        }
+    }
+
+    public void SetupBounce(bool _isBouncing, float _amountOfBounce)
+    {
+        isBouncing = _isBouncing;
+        bounceAmount = _amountOfBounce;
+
+        enemyTarget = new List<Transform>();
+    }
+
+    public void SetupPierce(float _pierceAmount)
+    {
+        pierceAmount = _pierceAmount;
+    }
+
+    public void ReturnSword()
+    {
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        transform.parent = null;
+        isReturning = true;
     }
 
     private void Update()
@@ -43,16 +79,69 @@ public class SwordSkillController : MonoBehaviour
                 player.ClearSword();
             }
         }
+
+        HandleBounce();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) // 부딪히면 박히도록
+    private void HandleBounce()
     {
-        if (collision.tag.Equals("Player"))
+        if (isBouncing && enemyTarget.Count > 0)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, enemyTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < 0.1f)
+            {
+                targetIndex++;
+                bounceAmount--;
+
+                if (bounceAmount <= 0)
+                {
+                    isBouncing = false;
+                    isReturning = true;
+                }
+
+                if (targetIndex >= enemyTarget.Count)
+                {
+                    targetIndex = 0;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isReturning)
         {
             return;
         }
 
-        anim.SetBool("Rotation", false);
+        collision.GetComponent<Enemy>()?.TakeDamage();
+
+        if (collision.GetComponent<Enemy>() != null)
+        {
+            if (isBouncing && enemyTarget.Count <= 0)
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
+
+                foreach (var hit in colliders)
+                {
+                    if (hit.GetComponent<Enemy>() != null)
+                    {
+                        enemyTarget.Add(hit.transform);
+                    }
+                }
+            }
+        }
+
+        StuckInto(collision);
+    }
+
+    private void StuckInto(Collider2D collision)
+    {
+        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        {
+            pierceAmount--;
+            return;
+        }
 
         canRotate = false;
         cd.enabled = false;
@@ -60,13 +149,12 @@ public class SwordSkillController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        transform.parent = collision.transform;
-    }
+        if (isBouncing && enemyTarget.Count > 0)
+        {
+            return;
+        }
 
-    public void ReturnSword()
-    {
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        transform.parent = null;
-        isReturning = true;
+        anim.SetBool("Rotation", false);
+        transform.parent = collision.transform;
     }
 }
