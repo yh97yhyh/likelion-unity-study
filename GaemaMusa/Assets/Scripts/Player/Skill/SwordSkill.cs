@@ -14,6 +14,7 @@ public class SwordSkill : Skill
     public SwordType swordType = SwordType.Regular;
 
     [Header("Bounce Info")]
+    [SerializeField] private float bounceSpeed;
     [SerializeField] private float bounceAmount;
     [SerializeField] private float bounceGravity;
 
@@ -21,10 +22,18 @@ public class SwordSkill : Skill
     [SerializeField] private int pierceAmount;
     [SerializeField] private float pierceGravity;
 
+    [Header("Spin Info")]
+    [SerializeField] private float hitCooldown;
+    [SerializeField] private float maxTravelDistance;
+    [SerializeField] private float spinDuration;
+    [SerializeField] private float spinGravity;
+
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
     [SerializeField] private float swordGravity;
+    [SerializeField] private float freezeTimeDuration;
+    [SerializeField] private float returnSpeed;
 
     private Vector2 finalDir;
 
@@ -55,6 +64,10 @@ public class SwordSkill : Skill
         {
             swordGravity = pierceGravity;
         }
+        else if (swordType == SwordType.Spin)
+        {
+            swordGravity = spinGravity;
+        }
     }
 
 
@@ -80,15 +93,19 @@ public class SwordSkill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController swordSkillController = newSword.GetComponent<SwordSkillController>();
 
-        swordSkillController.SetupSword(finalDir, swordGravity, player);
+        swordSkillController.SetupSword(finalDir, swordGravity, player, freezeTimeDuration, returnSpeed);
 
         if (swordType == SwordType.Bounce)
         {
-            swordSkillController.SetupBounce(true, bounceAmount);
+            swordSkillController.SetupBounce(true, bounceAmount, bounceSpeed);
         }
         else if (swordType == SwordType.Pierce)
         {
             swordSkillController.SetupPierce(pierceAmount);
+        }
+        else if (swordType == SwordType.Spin)
+        {
+            swordSkillController.SetupSpin(true, maxTravelDistance, spinDuration, hitCooldown);
         }
 
         player.AssignNewSword(newSword);
