@@ -30,7 +30,6 @@ public class Dissolve : MonoBehaviour
         }
     }
 
-
     private IEnumerator Vanish(bool useDissolve, bool useVertical)
     {
         float elapsedTime = 0f;
