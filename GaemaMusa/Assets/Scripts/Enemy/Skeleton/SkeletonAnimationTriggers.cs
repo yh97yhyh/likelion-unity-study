@@ -21,10 +21,12 @@ public class SkeletonAnimationTriggers : MonoBehaviour
 
         foreach (var hit in colliders)
         {
-            if (hit.GetComponent<Player>() != null)
-            {
-                hit.GetComponent<Player>().TakeDamage();
-            }
+            //if (hit.GetComponent<Player>() != null)
+            //{
+            //    hit.GetComponent<Player>().TakeDamage();
+            //}
+            PlayerStats target = hit.GetComponent<PlayerStats>();
+            skeleton.stats.DoDamage(target);
         }
     }
 

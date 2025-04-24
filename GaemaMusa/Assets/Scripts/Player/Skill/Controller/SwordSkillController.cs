@@ -121,7 +121,7 @@ public class SwordSkillController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, enemyTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < 0.1f)
             {
-                enemyTarget[targetIndex].GetComponent<Enemy>().TakeDamage();
+                enemyTarget[targetIndex].GetComponent<Enemy>().DamageEffect();
                 enemyTarget[targetIndex].GetComponent<Enemy>().StartCoroutine("FreezeTimerFor", freezeTimeDuration);
 
                 targetIndex++;
@@ -176,7 +176,7 @@ public class SwordSkillController : MonoBehaviour
                     {
                         if (hit.GetComponent<Enemy>() != null)
                         {
-                            hit.GetComponent<Enemy>().TakeDamage();
+                            hit.GetComponent<Enemy>().DamageEffect();
                             hit.GetComponent<Enemy>().StartCoroutine("FreezeTimerFor", freezeTimeDuration);
                         }
                     }
@@ -202,7 +202,7 @@ public class SwordSkillController : MonoBehaviour
         if (collision.GetComponent<Enemy>() != null)
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.TakeDamage();
+            enemy.DamageEffect();
             enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
         }
 

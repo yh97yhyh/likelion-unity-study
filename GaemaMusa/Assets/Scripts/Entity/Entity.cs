@@ -18,6 +18,8 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public EntityFX fx { get; private set; }
+    public CharacterStats stats { get; private set; }
+    public CapsuleCollider2D cd { get; private set; }
 
     [Header("Knockback Info")]
     [SerializeField] protected Vector2 knockbackDirection;
@@ -34,6 +36,8 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         fx = GetComponent<EntityFX>();
+        stats = GetComponent<CharacterStats>();
+        cd = GetComponent<CapsuleCollider2D>();
     }
 
     protected virtual void Update()
@@ -41,7 +45,7 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage()
+    public virtual void DamageEffect()
     {
         fx.StartCoroutine("FlashFX");
         StartCoroutine("HitKnockBack");
@@ -113,5 +117,10 @@ public class Entity : MonoBehaviour
         facingDir = facingDir * -1;
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+    }
+
+    public virtual void Die()
+    {
+
     }
 }

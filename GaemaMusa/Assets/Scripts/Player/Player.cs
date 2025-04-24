@@ -38,6 +38,8 @@ public class Player : Entity
     public PlayerCounterAttackState counterAttackState { get; private set; }
     public PlayerAimSwordState aimSwordState { get; private set; }
     public PlayerCatchSwordState catchSwordState { get; private set; }
+
+    public PlayerDeadState deadState { get; private set; } 
     //public PlayerHangingState hangingState { get; private set; }
 
     #endregion
@@ -62,6 +64,7 @@ public class Player : Entity
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
         aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
         catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+        deadState = new PlayerDeadState(this, stateMachine, "Die");
         //hangingState = new PlayerHangingState(this, stateMachine, "Hanging");
     }
 
@@ -125,5 +128,12 @@ public class Player : Entity
     public void AnimationFinishTrigger()
     {
         stateMachine.currentState.AnimationFinishTrigger();
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        stateMachine.ChangeState(deadState);
     }
 }

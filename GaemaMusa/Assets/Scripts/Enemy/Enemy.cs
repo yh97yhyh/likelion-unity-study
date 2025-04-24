@@ -23,6 +23,7 @@ public class Enemy : Entity
     [HideInInspector] public float lastTimeAttacked;
 
     public EnemyStateMachine stateMachine { get; private set; }
+    public string lastAnimationBoolName { get; private set; }
 
     protected override void Awake()
     {
@@ -41,6 +42,11 @@ public class Enemy : Entity
     {
         base.Update();
         stateMachine.currentState.Update();
+    }
+
+    public virtual void AssignLastAnimName(string _animBoolName)
+    {
+        lastAnimationBoolName = _animBoolName;
     }
 
     public virtual void FreezeTime(bool _timerFrozen)
