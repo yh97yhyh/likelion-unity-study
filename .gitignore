@@ -484,4 +484,11 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
+# personal
+**/ARPGSamurai/
+**/Ida_Faber/
+**/JTS_TheSamuraiSword/
+**/minotaur1/
+**/Vefects/
+
 # End of https://www.toptal.com/developers/gitignore/api/unity,windows,visualstudio
